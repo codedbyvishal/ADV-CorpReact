@@ -1,5 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
@@ -11,8 +12,11 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 
+import Counter from "./pages/Counter";
+
 import Header, { SeesionHeader } from "./components/Header";
 import Footer, { SeesionFooter } from "./components/Footer";
+import Spinner from "./components/Spinner";
 
 const MainLayout = ({ children }) => (
   <>
@@ -30,46 +34,58 @@ const SessionLayout = ({ children }) => (
   </div>
 );
 
-export default class App extends Component {
+class App extends Component {
   render() {
-    return (
-      <Switch>
-        <Route path={["/login", "/register", "/forgotPassword"]}>
-          <SessionLayout>
-            <Switch>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/register">
-                <Registration />
-              </Route>
-              <Route path="/forgotPassword">
-                <ForgotPassword />
-              </Route>
-            </Switch>
-          </SessionLayout>
-        </Route>
-        <Route path={["/aboutUs", "/contactUs", "/servicePolicies", "/"]}>
-          <MainLayout>
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/aboutUs">
-                <AboutUs />
-              </Route>
-              <Route path="/contactUs">
-                <ContactUs />
-              </Route>
-              <Route path="/servicePolicies">
-                <ServicePolicies />
-              </Route>
-            </Switch>
-          </MainLayout>
-        </Route>
+    const { spinner } = this.props;
 
-        <Route path="*" component={NotFound} />
-      </Switch>
+    return (
+      <>
+        <Switch>
+          <Route exact path={["/login", "/register", "/forgotPassword"]}>
+            <SessionLayout>
+              <Switch>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/register">
+                  <Registration />
+                </Route>
+                <Route path="/forgotPassword">
+                  <ForgotPassword />
+                </Route>
+              </Switch>
+            </SessionLayout>
+          </Route>
+          <Route
+            exact
+            path={["/aboutUs", "/contactUs", "/servicePolicies", "/"]}
+          >
+            <MainLayout>
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/aboutUs">
+                  <AboutUs />
+                </Route>
+                <Route path="/contactUs">
+                  <ContactUs />
+                </Route>
+                <Route path="/servicePolicies">
+                  <ServicePolicies />
+                </Route>
+              </Switch>
+            </MainLayout>
+          </Route>
+          <Route path={["/counter"]}>
+            <Counter />
+          </Route>
+          <Route path="*" component={NotFound} />
+        </Switch>
+        {spinner && <Spinner />}
+      </>
     );
   }
 }
+
+export default connect((state) => ({ spinner: state.spinner }))(App);

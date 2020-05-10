@@ -60,3 +60,25 @@ export function login(profile) {
     }, delay);
   });
 }
+
+export function forgotPassword(profile) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const _profile = JSON.parse(localStorage.getItem("profile"));
+
+      return resolve({
+        status: 200,
+        data: {
+          message:
+            "Your temporary profile password is sent to your registered email.",
+          profile: {
+            email: _profile.email,
+            username: _profile.username,
+            userId: _profile.userId,
+            password: _profile.password,
+          },
+        },
+      });
+    }, delay);
+  });
+}

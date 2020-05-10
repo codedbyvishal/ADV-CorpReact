@@ -1,11 +1,31 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from "react-toastify";
+import _isEmpty from "lodash/isEmpty";
+
+import { forgotPassword } from "../../server";
 
 export default class ForgotPassword extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    const formData = {};
+
+    for (let field of e.currentTarget) {
+      if (field.type !== "submit") {
+        formData[field.name] = field.value;
+      }
+    }
+
+    if (!_isEmpty(formData)) {
+      forgotPassword(formData).then((resp) => {
+        if (resp.status === 200) {
+          toast.success(resp.data.message);
+        }
+      });
+    }
   };
 
   render() {
