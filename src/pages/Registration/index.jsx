@@ -44,9 +44,11 @@ export default class Registration extends Component {
     }
 
     if (!_isEmpty(formData)) {
+      this.props.onShowLoader();
       register(formData).then((resp) => {
         if (resp.status === 200) {
           this.setState({ isLoggedIn: true });
+          this.props.onHideLoader();
         }
       });
     }

@@ -1,22 +1,15 @@
 import React, { Component } from "react";
 import _isEmpty from "lodash/isEmpty";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
+import { push } from "connected-react-router";
+import { connect } from "react-redux";
 
+import { showLoader, hideLoader } from "../../components/Spinner/actions";
 import { login } from "../../server";
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoggedIn: false,
-    };
-
-    toast.configure();
-  }
-
+class Login extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -30,27 +23,24 @@ export default class Login extends Component {
     }
 
     if (!_isEmpty(formData)) {
+      this.props.showLoader();
       login(formData)
         .then((resp) => {
           if (resp.status === 200) {
             toast.success(resp.data.message);
-            this.setState({ isLoggedIn: true });
+            this.props.push("/");
+            this.props.hideLoader();
           }
         })
         .catch((err) => {
           if (err.status === 401) {
             toast.error(err.data.message);
-            this.setState({ isLoggedIn: false });
           }
         });
     }
   };
 
   render() {
-    if (this.state.isLoggedIn) {
-      return <Redirect to="/" />;
-    }
-
     return (
       <div className="d-flex justify-content-center align-items-center m-3">
         <div className="login-page">
@@ -113,3 +103,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default connect(null, { push, showLoader, hideLoader })(Login);
