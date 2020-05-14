@@ -177,3 +177,40 @@ body {
     }
   }
 }
+
+.card.product-card:hover {
+  box-shadow: 0.3125rem 0.625rem 1.25rem 0.0625rem rgba(0, 0, 0, 0.3);
+
+  .card-image-top {
+    transform: scale(1);
+    transition: transform 0.5s ease;
+
+    &:hover {
+      transform: scale(1.5);
+    }
+  }
+}
+
+.color-swatch {
+  &-outer {
+    border-radius: 50%;
+    height: 1.35rem;
+    width: 1.4rem;
+    background-color: $color-light;
+    border: 0.0625rem solid $color-light;
+    float: left;
+    margin: 0;
+
+    &:hover {
+      border-color: $color-dark;
+    }
+  }
+
+  &-inner {
+    border-radius: 50%;
+    height: 1rem;
+    width: 1rem;
+    float: left;
+    margin: 0.125rem;
+  }
+}

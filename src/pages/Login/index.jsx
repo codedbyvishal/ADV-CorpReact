@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { push } from "connected-react-router";
 import { connect } from "react-redux";
 
-import { showLoader, hideLoader } from "../../components/Spinner/actions";
+import { showLoader, hideLoader } from "../../store/actions";
 import { login } from "../../server";
 
 class Login extends Component {

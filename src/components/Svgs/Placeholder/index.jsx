@@ -1,5 +1,5 @@
 import React from "react";
-import shuffle from "lodash/shuffle";
+import _sampleSize from "lodash/sampleSize";
 
 const _colors = [
   "#007bff",
@@ -21,7 +21,7 @@ export default function Placeholder({
   width = 800,
   height = 400,
 }) {
-  const clrs = colors || shuffle(_colors);
+  const clrs = colors || _sampleSize(_colors, 3);
 
   return (
     <svg
@@ -34,6 +34,7 @@ export default function Placeholder({
       role="img"
     >
       <title>{text}</title>
+
       <rect width="100%" height="100%" fill={clrs[0]}></rect>
       <rect x="10%" y="10%" width="80%" height="80%" fill={clrs[1]}></rect>
       <text

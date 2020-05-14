@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import _isEmpty from "lodash/isEmpty";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { showLoader, hideLoader } from "../../store/actions";
 import { register } from "../../server";
 
 // Controlled vs Uncontrolled component - Reactjs.org
@@ -10,15 +14,13 @@ import { register } from "../../server";
 // Redirect - react-router.org
 // Spinner - html/css
 
-export default class Registration extends Component {
+class Registration extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       username: "",
       email: "",
-
-      isLoggedIn: false,
     };
 
     this.passwordNode = React.createRef();
@@ -44,11 +46,12 @@ export default class Registration extends Component {
     }
 
     if (!_isEmpty(formData)) {
-      this.props.onShowLoader();
+      this.props.showLoader();
       register(formData).then((resp) => {
         if (resp.status === 200) {
-          this.setState({ isLoggedIn: true });
-          this.props.onHideLoader();
+          toast.success(resp.data.message);
+          this.props.push("/");
+          this.props.hideLoader();
         }
       });
     }
@@ -61,15 +64,11 @@ export default class Registration extends Component {
     const { passwordNode, confirmPasswordNode } = this;
 
     if (passwordNode.value !== confirmPasswordNode.value) {
-      alert("Password and Confirm password should match");
+      toast.error("Password and Confirm password should match");
     }
   };
 
   render() {
-    if (this.state.isLoggedIn) {
-      return <Redirect to="/" />;
-    }
-
     return (
       <div className="d-flex justify-content-center align-items-center m-3">
         <div className="registration-page">
@@ -183,3 +182,5 @@ export default class Registration extends Component {
     );
   }
 }
+
+export default connect(null, { showLoader, hideLoader, push })(Registration);

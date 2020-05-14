@@ -17,10 +17,13 @@ import Counter from "./pages/Counter";
 import Header, { SeesionHeader } from "./components/Header";
 import Footer, { SeesionFooter } from "./components/Footer";
 import Spinner from "./components/Spinner";
+import Breadcrumb from "./components/Breadcrumb";
+import ScrollToTop from "./components/ScrollToTop";
 
 const MainLayout = ({ children }) => (
   <>
     <Header />
+    <Breadcrumb />
     {children}
     <Footer />
   </>
@@ -39,7 +42,7 @@ class App extends Component {
     const { spinner } = this.props;
 
     return (
-      <>
+      <ScrollToTop>
         <Switch>
           <Route exact path={["/login", "/register", "/forgotPassword"]}>
             <SessionLayout>
@@ -83,7 +86,7 @@ class App extends Component {
           <Route path="*" component={NotFound} />
         </Switch>
         {spinner && <Spinner />}
-      </>
+      </ScrollToTop>
     );
   }
 }
