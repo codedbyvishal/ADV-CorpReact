@@ -3,6 +3,9 @@ import { uuidv4 } from "./utils";
 export const SITE_NAME = "The Brand";
 export const SITE_LOGO = "peace";
 
+export const SEARCH_QUERY_CHARS = 3;
+export const DEBOUNCED_DELAY = 350; // MS
+
 export const NAV_MENU_ITEMS = [
   {
     key: uuidv4(),
@@ -244,6 +247,28 @@ export const FOOTER = {
       key: uuidv4(),
       label: "My Addresses",
       link: "#",
+    },
+  ],
+};
+
+export const DEFAULT_BREADCRUMBS = [
+  { label: "Home", link: "/", key: uuidv4() },
+];
+export const BREADCRUMBS = {
+  aboutUs: [
+    { label: "Home", link: "/", key: uuidv4() },
+    { label: "About Us", link: "/aboutUs", key: uuidv4() },
+  ],
+  contactUs: [
+    { label: "Home", link: "/", key: uuidv4() },
+    { label: "Contact Us", link: "/contactUs", key: uuidv4() },
+  ],
+  servicePolicies: [
+    { label: "Home", link: "/", key: uuidv4() },
+    {
+      label: "Services and Policies",
+      link: "/servicePolicies",
+      key: uuidv4(),
     },
   ],
 };

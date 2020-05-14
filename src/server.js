@@ -3,6 +3,7 @@
 // HTTP status codes
 
 import { uuidv4 } from "./utils";
+import { PRODUCTS_LIST } from "./db";
 
 const delay = 3000;
 
@@ -78,6 +79,32 @@ export function forgotPassword(profile) {
             password: _profile.password,
           },
         },
+      });
+    }, delay);
+  });
+}
+
+export function getSlpData(query) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      let productList = PRODUCTS_LIST;
+
+      if (query) {
+        const _query = query.toLowerCase();
+
+        productList = PRODUCTS_LIST.filter((product) => {
+          const { name, tags, categories } = product;
+          const _tags = tags.join(" ");
+          const _categories = categories.join(" ");
+          const _queryStr = `${name} ${_tags} ${_categories}`.toLowerCase();
+
+          return _queryStr.indexOf(_query) > -1;
+        });
+      }
+
+      return resolve({
+        status: 200,
+        data: productList,
       });
     }, delay);
   });

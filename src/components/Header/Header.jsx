@@ -1,11 +1,20 @@
 import React, { Component } from "react";
 import cx from "classnames";
+import _debounce from "lodash/debounce";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { SITE_NAME, SITE_LOGO, NAV_MENU_ITEMS } from "../../config";
+import {
+  SITE_NAME,
+  SITE_LOGO,
+  NAV_MENU_ITEMS,
+  SEARCH_QUERY_CHARS,
+  DEBOUNCED_DELAY,
+} from "../../config";
 import { uuidv4 } from "../../utils";
 
+import { getProducts } from "../../store/actions";
 // Task:
 // 1. Show an alert with the user search query from search box on
 // click of search icon of enter - Done
@@ -14,7 +23,7 @@ import { uuidv4 } from "../../utils";
 
 // - Show alert('Message')
 
-export default class Header extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
 
@@ -25,6 +34,15 @@ export default class Header extends Component {
       activeMenuItem: "",
       isLoggedIn: false,
     };
+
+    this.fetchProductsDebounced = _debounce(
+      this.fetchProducts,
+      DEBOUNCED_DELAY,
+      {
+        leading: false,
+        trailing: true,
+      }
+    );
   }
 
   toggleMenu = (e) => {
@@ -38,15 +56,19 @@ export default class Header extends Component {
 
   onChange = (e) => {
     e.stopPropagation();
+    const query = e.currentTarget.value;
 
-    this.setState({ query: e.currentTarget.value });
+    this.setState({ query }, () => {
+      if (query.length > SEARCH_QUERY_CHARS)
+        this.fetchProductsDebounced(this.state.query);
+    });
   };
 
   onSubmit = (e) => {
     e.stopPropagation();
     e.preventDefault();
 
-    alert(this.state.query);
+    this.fetchProducts(this.state.query);
   };
 
   onMouseEnter = (e) => {
@@ -74,6 +96,10 @@ export default class Header extends Component {
     this.setState((pS) => ({
       catDropdown: pS.catDropdown === catDropdown ? "" : catDropdown,
     }));
+  };
+
+  fetchProducts = (query) => {
+    this.props.getProducts(query);
   };
 
   render() {
@@ -225,3 +251,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default connect(null, { getProducts })(Header);

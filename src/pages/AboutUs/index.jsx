@@ -17,23 +17,23 @@ export default class AboutUs extends Component {
             <u>About Us</u>
           </h2>
           <p className="lead">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
-              saepe error cupiditate autem. Ad illo error tempore, accusantium
-              sapiente molestias? Ea inventore nam reiciendis architecto non saepe
-              vitae. Quo, voluptas? Illum, officia quis. Nostrum, sit deserunt
-              quos, ipsam quas corporis accusantium ab hic asperiores, magni quis
-              quam sequi molestiae. Eaque dignissimos delectus fugiat repellat
-              temporibus vero molestiae cum aut beatae. Alias cum ducimus sunt!
-              Hic pariatur aperiam esse blanditiis quo, natus aliquam. Culpa
-              possimus, maxime amet debitis enim aut consequatur adipisci ut quis
-              suscipit provident cupiditate ea placeat magni. Molestiae! Quasi,
-              quaerat sequi qui minima, ut repellendus amet eveniet voluptatem
-              assumenda nihil cupiditate iusto dolorem fugiat aperiam enim
-              molestias, culpa debitis quis vel reiciendis quos maiores doloribus!
-              Culpa, corrupti dolore. Rem sit facilis ratione eligendi velit animi
-              assumenda corporis aliquam, saepe fugiat earum odit quaerat nulla
-              porro nihil maiores, placeat delectus aut corrupti! Qui omnis, enim
-              ipsum fugit aliquid nisi?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+            saepe error cupiditate autem. Ad illo error tempore, accusantium
+            sapiente molestias? Ea inventore nam reiciendis architecto non saepe
+            vitae. Quo, voluptas? Illum, officia quis. Nostrum, sit deserunt
+            quos, ipsam quas corporis accusantium ab hic asperiores, magni quis
+            quam sequi molestiae. Eaque dignissimos delectus fugiat repellat
+            temporibus vero molestiae cum aut beatae. Alias cum ducimus sunt!
+            Hic pariatur aperiam esse blanditiis quo, natus aliquam. Culpa
+            possimus, maxime amet debitis enim aut consequatur adipisci ut quis
+            suscipit provident cupiditate ea placeat magni. Molestiae! Quasi,
+            quaerat sequi qui minima, ut repellendus amet eveniet voluptatem
+            assumenda nihil cupiditate iusto dolorem fugiat aperiam enim
+            molestias, culpa debitis quis vel reiciendis quos maiores doloribus!
+            Culpa, corrupti dolore. Rem sit facilis ratione eligendi velit animi
+            assumenda corporis aliquam, saepe fugiat earum odit quaerat nulla
+            porro nihil maiores, placeat delectus aut corrupti! Qui omnis, enim
+            ipsum fugit aliquid nisi?
           </p>
           <ul>
             <li>
