@@ -4,6 +4,9 @@ import {
   GET_PRODTUCT_LIST_REQUEST,
   GET_PRODTUCT_LIST_SUCCESS,
   GET_PRODTUCT_LIST_FAILURE,
+  ADD_TO_CART_REQUEST,
+  ADD_TO_CART_SUCCESS,
+  ADD_TO_CART_FAILURE,
 } from "./actionTypes";
 
 const initialInventoryState = {
@@ -31,6 +34,24 @@ export function spinner(state = false, action) {
       return true;
     case HIDE_LOADER:
       return false;
+    default:
+      return state;
+  }
+}
+
+const initialCartState = {
+  inProgress: false,
+  data: [],
+  err: null,
+};
+export function cart(state = initialCartState, action) {
+  switch (action.type) {
+    case ADD_TO_CART_REQUEST:
+      return { ...state, inProgress: true };
+    case ADD_TO_CART_SUCCESS:
+      return { ...state, inProgress: false, data: action.payload };
+    case ADD_TO_CART_FAILURE:
+      return { ...state, inProgress: false, err: action.payload };
     default:
       return state;
   }

@@ -104,6 +104,8 @@ class Header extends Component {
 
   render() {
     const { showMenu, catDropdown, activeMenuItem } = this.state;
+    const { cart } = this.props;
+    const cartCount = cart.data.length;
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -219,7 +221,7 @@ class Header extends Component {
                       />
                     )}
                     {item.link === "cart" && (
-                      <span className="cart-count">9</span>
+                      <span className="cart-count">{cartCount}</span>
                     )}
                   </a>
                   {isDropdownOpen && (
@@ -252,4 +254,6 @@ class Header extends Component {
   }
 }
 
-export default connect(null, { getProducts })(Header);
+export default connect((state) => ({ cart: state.cart }), { getProducts })(
+  Header
+);
