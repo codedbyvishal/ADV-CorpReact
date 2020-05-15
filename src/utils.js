@@ -63,3 +63,11 @@ export const genProductInfo = (opts, isMen = false) => {
     description: getProductDescription(),
   };
 };
+
+// https://www.w3schools.com/jsref/jsref_tolocalestring_number.asp
+export function formatCurrency(num = 0) {
+  return num.toLocaleString("en-IN", {
+    style: "currency",
+    currency: "INR",
+  });
+}

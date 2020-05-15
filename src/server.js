@@ -5,7 +5,17 @@
 import { uuidv4 } from "./utils";
 import { PRODUCTS_LIST } from "./db";
 
-const delay = 3000;
+const delay = 0;
+
+export function getInitialState() {
+  return {
+    cart: {
+      inProgress: false,
+      data: JSON.parse(localStorage.getItem("myCart") || "[]"),
+      err: null,
+    },
+  };
+}
 
 export function register(profile) {
   return new Promise((resolve, reject) => {
@@ -105,6 +115,50 @@ export function getSlpData(query) {
       return resolve({
         status: 200,
         data: productList,
+      });
+    }, delay);
+  });
+}
+
+export function addToCart(product) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      let myCart = localStorage.getItem("myCart");
+
+      if (myCart) {
+        myCart = JSON.parse(myCart);
+      } else {
+        myCart = [];
+      }
+
+      // TODO: Instead adding new item every time we need check if that
+      // item is already there or not
+      // If its there just add-up the quantity
+      // If not then just set the quantity to 1
+      // lodash, [].map, [].find
+
+      myCart.push({ sku: product.sku, quantity: product.quantity || 1 });
+
+      localStorage.setItem("myCart", JSON.stringify(myCart));
+
+      return resolve({
+        status: 200,
+        data: myCart,
+      });
+    }, delay);
+  });
+}
+
+export function removeFromCart(product) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      let myCart = localStorage.getItem("myCart");
+
+      // TODO: Logic for removing product from cart
+
+      return resolve({
+        status: 200,
+        data: myCart,
       });
     }, delay);
   });

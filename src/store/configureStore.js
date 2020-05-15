@@ -6,6 +6,8 @@ import thunk from "redux-thunk";
 
 import reducers from "./reducers";
 
+import { getInitialState } from "../server";
+
 export const history = createBrowserHistory();
 
 const middlewares = [
@@ -21,6 +23,6 @@ if (process.env.NODE_ENV === `development`) {
 // (reducer, initialState, middleware)
 export const store = createStore(
   reducers(history),
-  // { counter: 7 },
+  getInitialState(),
   applyMiddleware(...middlewares)
 );
