@@ -178,23 +178,25 @@ body {
   }
 }
 
-.card.product-card:hover {
-  box-shadow: 0.3125rem 0.625rem 1.25rem 0.0625rem rgba(0, 0, 0, 0.3);
-
-  .card-image-top {
-    transform: scale(1);
-    transition: transform 0.5s ease;
-
-    &:hover {
-      transform: scale(1.5);
-    }
-  }
-
+.card.product-card {
   .fav-icon {
     position: absolute;
     top: 0.625rem;
     right: 0.625rem;
     z-index: 2;
+  }
+
+  &:hover {
+    box-shadow: 0.3125rem 0.625rem 1.25rem 0.0625rem rgba(0, 0, 0, 0.3);
+
+    .card-image-top {
+      transform: scale(1);
+      transition: transform 0.5s ease;
+
+      &:hover {
+        transform: scale(1.5);
+      }
+    }
   }
 }
 

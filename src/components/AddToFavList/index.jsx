@@ -55,7 +55,7 @@ class AddToFavList extends Component {
         onClick={this.onClick}
       >
         <FontAwesomeIcon
-          icon="heart"
+          icon={{ prefix: isSelected ? "fas" : "far", iconName: "heart" }}
           color={isSelected ? ITEM_FAV_COLOR_ADDED : ITEM_FAV_COLOR_DEFAULT}
           size="2x"
         />
