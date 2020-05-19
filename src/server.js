@@ -14,6 +14,11 @@ export function getInitialState() {
       data: JSON.parse(localStorage.getItem("myCart") || "[]"),
       err: null,
     },
+    favList: {
+      inProgress: false,
+      data: JSON.parse(localStorage.getItem("myFavList") || "[]"),
+      err: null,
+    },
   };
 }
 
@@ -124,6 +129,7 @@ export function addToCart(product) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       let myCart = localStorage.getItem("myCart");
+      let found = false;
 
       if (myCart) {
         myCart = JSON.parse(myCart);
@@ -131,13 +137,20 @@ export function addToCart(product) {
         myCart = [];
       }
 
-      // TODO: Instead adding new item every time we need check if that
-      // item is already there or not
-      // If its there just add-up the quantity
-      // If not then just set the quantity to 1
-      // lodash, [].map, [].find
+      for (let i = 0; i < myCart.length; i++) {
+        if (myCart[i].sku === product.sku) {
+          const _qty = myCart[i].quantity + (product.quantity || 1);
 
-      myCart.push({ sku: product.sku, quantity: product.quantity || 1 });
+          myCart[i].quantity = _qty;
+
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        myCart.push({ sku: product.sku, quantity: product.quantity || 1 });
+      }
 
       localStorage.setItem("myCart", JSON.stringify(myCart));
 
@@ -152,13 +165,65 @@ export function addToCart(product) {
 export function removeFromCart(product) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      let myCart = localStorage.getItem("myCart");
+      let myCart = JSON.parse(localStorage.getItem("myCart") || "[]");
 
-      // TODO: Logic for removing product from cart
+      const newCart = [];
+      for (let i = 0; i < myCart.length; i++) {
+        if (myCart[i].sku !== product.sku) {
+          newCart.push(myCart[i]);
+        }
+      }
+
+      localStorage.setItem("myCart", JSON.stringify(newCart));
 
       return resolve({
         status: 200,
-        data: myCart,
+        data: newCart,
+      });
+    }, delay);
+  });
+}
+
+export function addToFavList(product) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      let myFavList = localStorage.getItem("myFavList");
+
+      if (myFavList) {
+        myFavList = JSON.parse(myFavList);
+      } else {
+        myFavList = [];
+      }
+
+      myFavList.push(product.sku);
+
+      localStorage.setItem("myFavList", JSON.stringify(myFavList));
+
+      return resolve({
+        status: 200,
+        data: myFavList,
+      });
+    }, delay);
+  });
+}
+
+export function removeFromFavList(product) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      let myFavList = JSON.parse(localStorage.getItem("myFavList") || "[]");
+
+      const newFavList = [];
+      for (let i = 0; i < myFavList.length; i++) {
+        if (myFavList[i] !== product.sku) {
+          newFavList.push(myFavList[i]);
+        }
+      }
+
+      localStorage.setItem("myFavList", JSON.stringify(newFavList));
+
+      return resolve({
+        status: 200,
+        data: newFavList,
       });
     }, delay);
   });

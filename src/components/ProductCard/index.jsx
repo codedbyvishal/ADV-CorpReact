@@ -5,8 +5,9 @@ import Placeholder from "../Svgs/Placeholder";
 import Colors from "../Colors";
 import Sizes from "../Sizes";
 import Prices from "../Prices";
+import AddToFavList from "../AddToFavList";
 
-import { addToCart } from "../../store/actions";
+import { addToCart, removeFromCart } from "../../store/actions";
 
 class ProductCard extends Component {
   addToCart = (event) => {
@@ -26,10 +27,11 @@ class ProductCard extends Component {
   };
 
   render() {
-    const { product } = this.props;
+    const { product, isInCart } = this.props;
 
     return (
       <div className="card product-card text-center p-1 m-1">
+        <AddToFavList skuId={product.sku} />
         <div className="overflow-hidden">
           <div className="card-image-top">
             <Placeholder text={product.name} textFontSize="2rem" />
@@ -38,16 +40,12 @@ class ProductCard extends Component {
         <div className="card-body text-dark text-left">
           <h5 className="card-title">{product.name}</h5>
           <div className="row">
-            <div className="col-3">Colors: </div>
-            <div className="col-9">
-              <Colors colors={product.colors} />
-            </div>
+            <div className="d-inline-block ml-3">Colors: </div>
+            <Colors colors={product.colors} />
           </div>
           <div className="row">
-            <div className="col-3">Sizes: </div>
-            <div className="col-9">
-              <Sizes sizes={product.sizes} />
-            </div>
+            <div className="d-inline-block ml-3">Sizes: </div>
+            <Sizes sizes={product.sizes} />
           </div>
           <div className="row">
             <Prices price={product.price} salePrice={product.salePrice} />
@@ -61,14 +59,15 @@ class ProductCard extends Component {
             >
               Add To Cart
             </button>
-            {/** TODO: Show only if this product is there in the cart */}
-            <button
-              onClick={this.removeFromCart}
-              data-sku={product.sku}
-              className="btn btn-primary  col-5 mx-2"
-            >
-              Remove From Cart
-            </button>
+            {isInCart && (
+              <button
+                onClick={this.removeFromCart}
+                data-sku={product.sku}
+                className="btn btn-primary  col-5 mx-2"
+              >
+                Remove From Cart
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -76,4 +75,4 @@ class ProductCard extends Component {
   }
 }
 
-export default connect((state) => state, { addToCart })(ProductCard);
+export default connect(null, { addToCart, removeFromCart })(ProductCard);
