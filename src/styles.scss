@@ -189,9 +189,24 @@ body {
       transform: scale(1.5);
     }
   }
+
+  .fav-icon {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    z-index: 2;
+  }
+}
+
+.color-container,
+.size-container {
+  display: inline-block;
+  position: relative;
 }
 
 .color-swatch {
+  display: inline-block;
+
   &-outer {
     border-radius: 50%;
     height: 1.35rem;
@@ -215,9 +230,6 @@ body {
   }
 }
 
-.size-container {
-  display: inline-block;
-}
 .size-swatch {
   &-outer {
     // border-radius: 50%;
@@ -235,10 +247,8 @@ body {
   }
 
   &-inner {
-    // border-radius: 50%;
     height: 1rem;
     line-height: 1rem;
-    // width: 1rem;
     float: left;
     margin: 0.125rem;
   }

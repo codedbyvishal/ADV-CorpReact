@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import _map from "lodash/map";
 
 import { getProducts } from "../../store/actions";
 
@@ -11,7 +12,9 @@ class Home extends Component {
   }
 
   render() {
+    const { cart } = this.props;
     const { data } = this.props.inventory;
+    const cartItemsSku = _map(cart.data, "sku");
 
     return (
       <div className="home-page">
@@ -21,7 +24,10 @@ class Home extends Component {
               className="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
               key={product.sku}
             >
-              <ProductCard product={product} />
+              <ProductCard
+                product={product}
+                isInCart={cartItemsSku.includes(product.sku)}
+              />
             </div>
           ))}
         </div>
@@ -30,6 +36,9 @@ class Home extends Component {
   }
 }
 
-export default connect((state) => ({ inventory: state.inventory }), {
-  getProducts,
-})(Home);
+export default connect(
+  (state) => ({ inventory: state.inventory, cart: state.cart }),
+  {
+    getProducts,
+  }
+)(Home);

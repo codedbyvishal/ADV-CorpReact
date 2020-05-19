@@ -272,3 +272,6 @@ export const BREADCRUMBS = {
     },
   ],
 };
+
+export const ITEM_FAV_COLOR_DEFAULT = "#000";
+export const ITEM_FAV_COLOR_ADDED = "#e91e63";

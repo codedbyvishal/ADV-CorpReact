@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Sizes({ sizes }) {
   return (
-    <div className="row">
+    <>
       {sizes.map((size, index) => {
         return (
           <div className="size-container" key={index}>
@@ -14,6 +14,6 @@ export default function Sizes({ sizes }) {
           </div>
         );
       })}
-    </div>
+    </>
   );
 }
